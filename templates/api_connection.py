@@ -78,16 +78,29 @@ def team2_nicknames(match_id):
     return team2_nicknames
 
 
-def win_rate(player_id):
+def win_rate_overall(player_id):
     response = requests.get(
     'https://open.faceit.com/data/v4/players/' + player_id + '/stats/cs2',
     headers={'Authorization': 'Bearer fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9'})
 
     json_data = response.json()
 
-    print(json_data)
+    overall_winrate = json_data['lifetime']['Win Rate %']
+    return overall_winrate
 
     
-print(win_rate("3137eb0b-7901-4783-9480-daced3aad07d"))
+def win_rate_by_map(player_id):
+    response = requests.get(
+    'https://open.faceit.com/data/v4/players/' + player_id + '/stats/cs2',
+    headers={'Authorization': 'Bearer fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9'})
 
+    json_data = response.json()
+
+    map_pool = ['Anubis', 'Mirage', 'Ancient', 'Inferno', 'Nuke', 'Overpass', 'Vertigo']
+    winrate_map_dict = {}
+
+    for i in range(len(json_data['segments'])):
+        winrate_map_dict[map_pool[i]] = json_data['segments'][i]['stats']['Win Rate %']
+
+    return winrate_map_dict
 
