@@ -3,10 +3,32 @@ import requests
 key = "fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9"
 match_id = "1-1c9a7df8-73b7-4796-b86f-7e42da3f3d2d"
 
+nick_name = "david-deagle"
+
 # response = requests.get(
 #     'https://open.faceit.com/data/v4/matches/1-1c9a7df8-73b7-4796-b86f-7e42da3f3d2d',
 #     headers={'Authorization': 'Bearer fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9'})
 
+# player id 
+# 3137eb0b-7901-4783-9480-daced3aad07d
+
+
+def get_player_id_and_rank(nick_name):
+
+    response = requests.get(
+    'https://open.faceit.com/data/v4/players?nickname=' + nick_name + '&game=cs2',
+    headers={'Authorization': 'Bearer fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9'})
+    
+    json_data = response.json()
+
+    player = {}
+
+    player['id'] = json_data['player_id']
+    player['skill_level'] = json_data['games']['cs2']['skill_level']
+    player['elo'] = json_data['games']['cs2']['faceit_elo']
+
+    return player
+ 
 
 def team1_id(match_id):
     
