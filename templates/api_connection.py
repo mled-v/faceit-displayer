@@ -138,6 +138,5 @@ def player_stats(player_id):
 
     stats['average_kd'] = json_data['lifetime']['Average K/D Ratio']
     stats['average_hs'] = json_data['lifetime']['Average Headshots %']
-    stats['']
 
 
