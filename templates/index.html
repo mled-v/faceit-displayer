@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../assets/styles.css" />
     <title>Add Numbers</title>
 </head>
 <body>
-    <h1>Please enter match id:</h1>
-    <form action="/add" method="post">
-        <label for="match_id">Match ID:</label><br>
-        <input type="text" id="match_id" name="match_id"><br>
-    </form>
+    <div class="class0">Faceit Displayer</div>
+    <div class="container">
+        <img id="logo" src="../assets/logo.png" alt="FaceIt Logo">
+        <form class="class1" action="/add" method="post">
+            <input type="text" id="match_id" name="match_id" placeholder="Match ID"><br>
+        </form>
+    </div>
 </body>
 </html>

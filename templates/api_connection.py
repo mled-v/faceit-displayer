@@ -126,3 +126,18 @@ def win_rate_by_map(player_id):
 
     return winrate_map_dict
 
+def player_stats(player_id):
+    response = requests.get(
+    'https://open.faceit.com/data/v4/players/' + player_id + '/stats/cs2',
+    headers={'Authorization': 'Bearer fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9'}
+    )
+
+    json_data = response.json()
+
+    stats = {}
+
+    stats['average_kd'] = json_data['lifetime']['Average K/D Ratio']
+    stats['average_hs'] = json_data['lifetime']['Average Headshots %']
+    stats['']
+
+
