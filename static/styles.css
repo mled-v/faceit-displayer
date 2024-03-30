@@ -1,0 +1,59 @@
+@font-face {
+    font-family: Play-Bold;
+    src: url(Play-Regular.ttf);
+}
+@font-face {
+    font-family: test;
+    src: url(assets/Play-Bold.ttf);
+}
+
+.class0 {
+    
+    font-size: 100px;
+    font-family: Play-Bold;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    max-width: 800px; /* Limits the maximum width of the container */
+    margin: 0 auto; /* Centers the container horizontally on the page */
+    padding: 20px; /* Adds some padding around the content within the container */
+    display: flex; /* Uses Flexbox layout to arrange its children */
+    align-items: center; /* Aligns children vertically in the center */
+  }
+
+.class1 {
+    justify-content: center;
+}
+
+#logo {
+    width: 150px;
+}
+
+#match_id {
+    font-size: 20px;
+    color: black;
+    font-family: Play-Bold;
+    width: 500px;
+    
+}
+body {
+    background-color: rgb(35, 40, 40)
+}
+
+.teams {
+    padding-top: 25px;
+    padding-left: 100px;
+    padding-right: 100px;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    font-family: Play-Bold;
+
+}
+
+.playerid {
+    padding: 20px;
+}
