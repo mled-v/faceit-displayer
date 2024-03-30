@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from templates import api_connection 
-
+from time import time
 
 app = Flask(__name__)
 
