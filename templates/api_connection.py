@@ -13,21 +13,52 @@ nick_name = "david-deagle"
 # 3137eb0b-7901-4783-9480-daced3aad07d
 
 
-def get_player_id_and_rank(nick_name):
-
+#This function will retrieve [Player names, Player id's, Faceit ranks, avatars, win probablility] data
+def get_match_data(match_id):
     response = requests.get(
-    'https://open.faceit.com/data/v4/players?nickname=' + nick_name + '&game=cs2',
-    headers={'Authorization': 'Bearer fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9'})
-    
+    'https://open.faceit.com/data/v4/matches/1-1c9a7df8-73b7-4796-b86f-7e42da3f3d2d',
+    headers={'Authorization': 'Bearer fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9'}        
+    )
+
     json_data = response.json()
 
-    player = {}
+    return json_data
 
-    player['id'] = json_data['player_id']
-    player['skill_level'] = json_data['games']['cs2']['skill_level']
-    player['elo'] = json_data['games']['cs2']['faceit_elo']
+#This function will parse get_match_data and return [Player_id and rank]
+def get_player_id_and_rank(match_id):
+    json_data = get_match_data(match_id)
 
-    return player
+    loaded_data = {}
+
+    team1 = json_data['teams']['faction1']['roster']
+    team2 = json_data['teams']['faction2']['roster']
+    team1_ids = {}
+    team2_ids = {}
+    
+    for i in range(len(team1)):
+        display_name = team1[i]['nickname']
+        player_id =team1[i]['game_player_id']
+        skill_level = team1[i]['game_skill_level']
+        avatar = team1[i]['avatar']
+        team1_ids[f'Player{i}'] = [display_name, player_id, skill_level, avatar]
+
+    for i in range(len(team2)):
+        display_name = team2[i]['nickname']
+        player_id =team2[i]['game_player_id']
+        skill_level = team2[i]['game_skill_level']
+        avatar = team2[i]['avatar']
+        team2_ids[f'Player{i}'] = [display_name, player_id, skill_level, avatar]
+
+
+
+
+    loaded_data["team1_data"] = team1_ids
+    loaded_data["team2_data"] = team2_ids
+
+    return loaded_data
+
+print(get_player_id_and_rank(1))
+
  
 
 def team1_id(match_id):

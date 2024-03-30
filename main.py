@@ -10,22 +10,16 @@ def index():
 
 @app.route('/add', methods=['POST'])
 def add():
+    #form that requests match id
     match_id = (request.form['match_id'])
 
-    team1_nickname = api_connection.team1_nicknames(match_id)
-    team2_nickname = api_connection.team2_nicknames(match_id)
+    #match data that is got from get_match_data api call
+    match_data = api_connection.get_match_data(match_id)
 
-    team1_winrate = {}
+    #player id and rank from match data
+    player_id_and_rank = api_connection.get_player_id_and_rank(match_data)
 
-    for nickname in team1_nickname:
-        id = api_connection.get_player_id_and_rank(nickname)
-        player_id = id['id']
-        team1_winrate[nickname] = api_connection.win_rate_overall(player_id)
-
-
-
-    return render_template('match.html', team1 = team1_nickname, team2 = team2_nickname, 
-        team1_winrate = team1_winrate)
+    return render_template('match.html',player_id_and_rank = player_id_and_rank )
 
 
 if __name__ == '__main__':
