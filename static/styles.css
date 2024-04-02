@@ -55,5 +55,10 @@ body {
 }
 
 .playerid {
-    padding: 20px;
+    padding: 10px;
+    font-size: 17px;
+}
+
+#stats {
+    font-size: 13px;
 }
