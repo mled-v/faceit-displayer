@@ -33,24 +33,7 @@ def add():
     for player_data in player_id_and_rank['team2_data'].values():
         team2_player_ids.append(player_data[1])
 
-    team1_data = []
-
-    def get_tasks(session):
-            tasks = []
-            for player in team1_player_ids:
-                tasks.append(asyncio.create_task(session.get('https://open.faceit.com/data/v4/players/' 
-                    + player + '/stats/cs2',
-                    headers={'Authorization': 'Bearer fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9'}, ssl = False)))
-            return tasks
-
-    async def get_winrate():
-        async with aiohttp.ClientSession() as session:
-            tasks = get_tasks(session)
-            responses = await asyncio.gather(*tasks)
-            for response in responses:
-                team1_data.append(await response.json())
-
-    asyncio.run(get_winrate())
+    team1_data = api_connection.win_rate_overall(team1_player_ids)
 
     team1_winrates = []
 
@@ -62,7 +45,7 @@ def add():
 
 
     return render_template('match.html',player_id_and_rank = player_id_and_rank, 
-                           team1_player_ids = team1_player_ids, team1_winrates = team1_winrates, team1_data = team1_data )
+                           team1_player_ids = team1_player_ids, team1_winrates = team1_winrates)
 
 
 if __name__ == '__main__':

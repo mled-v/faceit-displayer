@@ -1,4 +1,6 @@
 import requests
+import asyncio
+import aiohttp
 
 key = "fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9"
 match_id = "1-1c9a7df8-73b7-4796-b86f-7e42da3f3d2d"
@@ -72,15 +74,29 @@ def get_player_id_and_rank(match_id):
 
 
 
-def win_rate_overall(player_id):
-    response = requests.get(
-    'https://open.faceit.com/data/v4/players/' + player_id + '/stats/cs2',
-    headers={'Authorization': 'Bearer fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9'})
+def win_rate_overall(player_id_list):
 
-    json_data = response.json()
+    team1_player_ids = player_id_list
+    team1_data = []
 
-    overall_winrate = json_data['lifetime']['Win Rate %']
-    return overall_winrate
+    def get_tasks(session):
+            tasks = []
+            for player in team1_player_ids:
+                tasks.append(asyncio.create_task(session.get('https://open.faceit.com/data/v4/players/' 
+                    + player + '/stats/cs2',
+                    headers={'Authorization': 'Bearer fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9'}, ssl = False)))
+            return tasks
+
+    async def get_winrate():
+        async with aiohttp.ClientSession() as session:
+            tasks = get_tasks(session)
+            responses = await asyncio.gather(*tasks)
+            for response in responses:
+                team1_data.append(await response.json())
+
+    asyncio.run(get_winrate())
+
+    return team1_data
 
 print(win_rate_overall('3137eb0b-7901-4783-9480-daced3aad07d'))
 
