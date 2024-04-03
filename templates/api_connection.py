@@ -2,8 +2,8 @@ import requests
 import asyncio
 import aiohttp
 
-key = "fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9"
-match_id = "1-1c9a7df8-73b7-4796-b86f-7e42da3f3d2d"
+#key = "fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9"
+#match_id = "1-1c9a7df8-73b7-4796-b86f-7e42da3f3d2d"
 
 nick_name = "david-deagle"
 
@@ -18,7 +18,7 @@ nick_name = "david-deagle"
 #This function will retrieve [Player names, Player id's, Faceit ranks, avatars, win probablility] data
 def get_match_data(match_id):
     response = requests.get(
-    'https://open.faceit.com/data/v4/matches/1-1c9a7df8-73b7-4796-b86f-7e42da3f3d2d',
+    'https://open.faceit.com/data/v4/matches/' + str(match_id),
     headers={'Authorization': 'Bearer fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9'}        
     )
 
@@ -43,6 +43,7 @@ def get_player_id_and_rank(match_id):
     loaded_data = {}
 
     team1 = json_data['teams']['faction1']['roster']
+    print(team1)
     team2 = json_data['teams']['faction2']['roster']
     team1_ids = {}
     team2_ids = {}
@@ -67,11 +68,11 @@ def get_player_id_and_rank(match_id):
     loaded_data["team1_data"] = team1_ids
     loaded_data["team2_data"] = team2_ids
 
-    print(loaded_data['team1_data'])
+
 
     return loaded_data
 
-
+get_player_id_and_rank('1-592ca502-1c9b-4630-86da-7926bf9909d5')
 
 
 def win_rate_overall(player_id_list):
@@ -98,7 +99,7 @@ def win_rate_overall(player_id_list):
 
     return team1_data
 
-print(win_rate_overall('3137eb0b-7901-4783-9480-daced3aad07d'))
+
 
     
 def win_rate_by_map(player_id):

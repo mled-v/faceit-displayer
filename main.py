@@ -20,7 +20,7 @@ def add():
     match_data = api_connection.get_match_data(match_id)
 
     #player id and rank from match data
-    player_id_and_rank = api_connection.get_player_id_and_rank(match_data)
+    player_id_and_rank = api_connection.get_player_id_and_rank(match_id)
 
     #stores the teams player id's
     team1_player_ids = []
