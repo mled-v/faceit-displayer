@@ -40,12 +40,20 @@ def add():
     for item in team1_data:
         team1_winrates.append(item['lifetime']['Win Rate %'])
 
+    team2_data = api_connection.win_rate_overall(team2_player_ids)
+
+    team2_winrates = []
+
+    for item in team2_data:
+        team2_winrates.append(item['lifetime']['Win Rate %'])
+
 
 
 
 
     return render_template('match.html',player_id_and_rank = player_id_and_rank, 
-                           team1_player_ids = team1_player_ids, team1_winrates = team1_winrates)
+                           team1_player_ids = team1_player_ids, team1_winrates = team1_winrates,
+                           team2_winrates = team2_winrates)
 
 
 if __name__ == '__main__':

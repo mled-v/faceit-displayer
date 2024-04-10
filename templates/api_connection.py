@@ -1,25 +1,17 @@
 import requests
 import asyncio
 import aiohttp
+from dotenv import load_dotenv
+import os
 
-#key = "fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9"
-#match_id = "1-1c9a7df8-73b7-4796-b86f-7e42da3f3d2d"
-
-nick_name = "david-deagle"
-
-# response = requests.get(
-#     'https://open.faceit.com/data/v4/matches/1-1c9a7df8-73b7-4796-b86f-7e42da3f3d2d',
-#     headers={'Authorization': 'Bearer fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9'})
-
-# player id 
-# 3137eb0b-7901-4783-9480-daced3aad07d
-
+load_dotenv('.env')
+key: str = os.getenv('API_KEY')
 
 #This function will retrieve [Player names, Player id's, Faceit ranks, avatars, win probablility] data
 def get_match_data(match_id):
     response = requests.get(
     'https://open.faceit.com/data/v4/matches/' + str(match_id),
-    headers={'Authorization': 'Bearer fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9'}        
+    headers={'Authorization': 'Bearer ' + key}        
     )
 
     json_data = response.json()
@@ -29,7 +21,7 @@ def get_match_data(match_id):
 def get_player_data(player_id):
     response = requests.get(
     'https://open.faceit.com/data/v4/players/' + player_id + '/stats/cs2',
-    headers={'Authorization': 'Bearer fde1c0a3-1e2c-4c2e-a982-8d851b6c43d9'}
+    headers={'Authorization': 'Bearer ' + key}  
     )
 
     json_data = response.json()
@@ -62,17 +54,10 @@ def get_player_id_and_rank(match_id):
         avatar = team2[i]['avatar']
         team2_ids[f'Player{i}'] = [display_name, player_id, skill_level, avatar]
 
-
-
-
     loaded_data["team1_data"] = team1_ids
     loaded_data["team2_data"] = team2_ids
 
-
-
     return loaded_data
-
-get_player_id_and_rank('1-592ca502-1c9b-4630-86da-7926bf9909d5')
 
 
 def win_rate_overall(player_id_list):
